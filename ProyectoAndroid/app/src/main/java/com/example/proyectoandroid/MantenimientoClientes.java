@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -57,13 +56,8 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
         String id=txtIdCliente.getText().toString();
         ContentValues cv=new ContentValues();
         llenarCv(cv);
-        try {
-            sqldb.update("Clientes",cv,"IdCliente=?",new String[]{id});
-            Toast.makeText(this,"Cliente modificado con exito",Toast.LENGTH_LONG).show();
-        }
-        catch (SQLiteConstraintException e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
-        }
+        sqldb.update("Clientes",cv,"IdCliente=?",new String[]{id});
+        Toast.makeText(this,"Cliente modificado con exitio",Toast.LENGTH_LONG).show();
     }
 
     private void darDeBaja() {
@@ -79,18 +73,11 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
         sqldb=MainActivity.toh.getWritableDatabase();
         ContentValues cv=new ContentValues();
         llenarCv(cv);
-        try {
-            sqldb.insertOrThrow("Clientes",null,cv);
-            //Habilitar y deshabilitar los botones correspondientes
-            btnAlta.setEnabled(false);
-            btnBaja.setEnabled(true);
-            btnModificacion.setEnabled(true);
-        }
-        catch(Exception e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
-            return;
-        }
-
+        sqldb.insert("Clientes",null,cv);
+        //Habilitar y deshabilitar los botones correspondientes
+        btnAlta.setEnabled(false);
+        btnBaja.setEnabled(true);
+        btnModificacion.setEnabled(true);
     }
 
     private void llenarCv(ContentValues cv) {
