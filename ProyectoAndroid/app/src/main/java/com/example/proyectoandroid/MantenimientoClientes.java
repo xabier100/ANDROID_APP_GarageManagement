@@ -52,11 +52,17 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
     }
 
     private void modificar() {
+        sqldb=MainActivity.toh.getWritableDatabase();
+        String id=txtIdCliente.getText().toString();
+        ContentValues cv=new ContentValues();
+        llenarCv(cv);
+        sqldb.update("Clientes",cv,"IdCliente=?",new String[]{id});
+        Toast.makeText(this,"Cliente modificado con exitio",Toast.LENGTH_LONG).show();
     }
 
     private void darDeBaja() {
-        String id=txtIdCliente.getText().toString();
         sqldb=MainActivity.toh.getWritableDatabase();
+        String id=txtIdCliente.getText().toString();
         sqldb.delete("Clientes","IdCliente=?",new String[]{id});
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
@@ -100,7 +106,7 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
             //Insertar los datos del cursor en las cajas de texto
             txtNombre.setText(c.getString(1));
             txtApellido.setText(c.getString(2));
-            txtDni.setText(c.getString(2));
+            txtDni.setText(c.getString(3));
             //Habilitar y deshabilitar los botones correspondientes
             btnAlta.setEnabled(false);
             btnBaja.setEnabled(true);

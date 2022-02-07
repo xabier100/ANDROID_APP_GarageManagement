@@ -19,11 +19,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         toh=new TallerOpenHelper(this, NOMBRE_BD,null,1);
         //Asignar a cada boton su vista
+        btnMantenimientoClientes=findViewById(R.id.btnMantenimientoClientes);
+        btnMantenimientoFacturas=findViewById(R.id.btnMantenimientoFacturas);
+        btnMantenimientoVehiculos=findViewById(R.id.btnMantenimientoVehiculos);
+
+        //Asignar los listener a los botones
         Button[] botones={btnMantenimientoClientes,btnMantenimientoFacturas,btnMantenimientoVehiculos};
-        int[] idBotones={R.id.btnMantenimientoClientes,R.id.btnMantenimientoFacturas,R.id.btnMantenimientoVehiculos};
-        for (int i = 0; i < botones.length; i++) {
-            botones[i]=findViewById(idBotones[i]);
-        }
         for (Button b : botones) {
             b.setOnClickListener(this);
         }
