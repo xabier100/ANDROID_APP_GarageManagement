@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.109" />
 
     <EditText
-        android:id="@+id/txtModelo"
+        android:id="@+id/txtConcepto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"

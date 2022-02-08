@@ -23,7 +23,7 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_mantenimiento_clientes);
         txtIdCliente=findViewById(R.id.txtIdCliente);
         txtNombre=findViewById(R.id.txtMarca);
-        txtApellido=findViewById(R.id.txtModelo);
+        txtApellido=findViewById(R.id.txtConcepto);
         txtDni=findViewById(R.id.txtDni);
         btnAlta=findViewById(R.id.btnAlta);
         btnBaja=findViewById(R.id.btnBaja);

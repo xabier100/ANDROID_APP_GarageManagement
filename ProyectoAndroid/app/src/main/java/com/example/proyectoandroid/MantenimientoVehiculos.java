@@ -22,8 +22,8 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_mantenimiento_vehiculos);
         txtIdVehiculo=findViewById(R.id.txtIdVehiculo);
         txtMarca =findViewById(R.id.txtMarca);
-        txtModelo =findViewById(R.id.txtModelo);
-        txtMatricula =findViewById(R.id.txtMatricula);
+        txtModelo =findViewById(R.id.txtConcepto);
+        txtMatricula =findViewById(R.id.txtImporte);
         txtYear=findViewById(R.id.txtYear);
         txtDNI=findViewById(R.id.txtDni);
         
