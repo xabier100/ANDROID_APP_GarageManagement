@@ -9,16 +9,19 @@ import android.widget.EditText;
 
 public class MantenimientoVehiculos extends AppCompatActivity {
     Button btnAlta,btnBaja,btnModificacion,btnBuscar;
-    EditText txtIdVehiculo,txtNombre,txtApellido,txtDni;
+    EditText txtIdVehiculo, txtMarca, txtModelo, txtMatricula,txtYear,txtDNI;
     SQLiteDatabase sqldb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mantenimiento_vehiculos);
         txtIdVehiculo=findViewById(R.id.txtIdCliente);
-        txtNombre=findViewById(R.id.txtNombre);
-        txtApellido=findViewById(R.id.txtApellido);
-        txtDni=findViewById(R.id.txtDni);
+        txtMarca =findViewById(R.id.txtMarca);
+        txtModelo =findViewById(R.id.txtModelo);
+        txtMatricula =findViewById(R.id.txtMatricula);
+        txtYear=findViewById(R.id.txtYear);
+        txtDNI=findViewById(R.id.txtDni);
+        
         btnAlta=findViewById(R.id.btnAlta);
         btnBaja=findViewById(R.id.btnBaja);
         btnModificacion=findViewById(R.id.btnModificacion);

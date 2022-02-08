@@ -25,7 +25,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "    Marca      TEXT," +
             "    Modelo     TEXT," +
             "    Matricula  TEXT," +
-            "    Año        INTEGER," +
+            "    Year        INTEGER," +
             "    Dni        INTEGER UNIQUE," +
             "    FOREIGN KEY (" +
             "        Dni" +

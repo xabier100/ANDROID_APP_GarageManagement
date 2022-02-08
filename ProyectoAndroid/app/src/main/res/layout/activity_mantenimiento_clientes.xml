@@ -68,7 +68,7 @@
         app:layout_constraintVertical_bias="0.068" />
 
     <EditText
-        android:id="@+id/txtNombre"
+        android:id="@+id/txtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.109" />
 
     <EditText
-        android:id="@+id/txtApellido"
+        android:id="@+id/txtModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
