@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +54,17 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
     }
 
     private void modificar() {
+        sqldb=MainActivity.toh.getWritableDatabase();
+        String id=txtIdVehiculo.getText().toString();
+        ContentValues cv=new ContentValues();
+        llenarCv(cv);
+        try {
+            sqldb.update("Vehiculos",cv,"IdVehiculo=?",new String[]{id});
+            Toast.makeText(this,"Vehiculo modificado con exito",Toast.LENGTH_LONG).show();
+        }
+        catch (SQLiteConstraintException e){
+            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void darDeBaja() {
