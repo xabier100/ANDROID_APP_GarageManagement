@@ -57,17 +57,17 @@
         app:layout_constraintVertical_bias="0.698" />
 
     <EditText
-        android:id="@+id/txtIdCodigoNota"
-        android:layout_width="82dp"
-        android:layout_height="32dp"
+        android:id="@+id/txtIdVehiculo"
+        android:layout_width="85dp"
+        android:layout_height="46dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintHorizontal_bias="0.174"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.11" />
 
     <Button
         android:id="@+id/btnBuscar"
@@ -131,7 +131,7 @@
         app:layout_constraintVertical_bias="0.196" />
 
     <EditText
-        android:id="@+id/txtFechaReparacion"
+        android:id="@+id/txtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -170,7 +170,7 @@
         app:layout_constraintVertical_bias="0.89" />
 
     <EditText
-        android:id="@+id/txtConcepto"
+        android:id="@+id/txtModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"

@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.589" />
 
     <EditText
-        android:id="@+id/txtIdCodigoNota"
+        android:id="@+id/txtIdVehiculo"
         android:layout_width="82dp"
         android:layout_height="32dp"
         android:ems="10"
@@ -106,7 +106,7 @@
         app:layout_constraintVertical_bias="0.198" />
 
     <EditText
-        android:id="@+id/txtFechaReparacion"
+        android:id="@+id/txtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -145,7 +145,7 @@
         app:layout_constraintVertical_bias="0.89" />
 
     <EditText
-        android:id="@+id/txtConcepto"
+        android:id="@+id/txtModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"

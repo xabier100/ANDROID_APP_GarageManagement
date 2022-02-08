@@ -26,7 +26,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "    Modelo     TEXT," +
             "    Matricula  TEXT," +
             "    Year        INTEGER," +
-            "    Dni        INTEGER UNIQUE," +
+            "    Dni        TEXT UNIQUE," +
             "    FOREIGN KEY (" +
             "        Dni" +
             "    )" +
@@ -37,7 +37,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             ");";
     private String strCrearTablaReparaciones="CREATE TABLE NotasReparaciones (" +
             "    CodigoNota         INTEGER," +
-            "    DNI                INTEGER UNIQUE," +
+            "    DNI                TEXT UNIQUE," +
             "    FechaReparacion INTEGER," +
             "    Concepcto          TEXT," +
             "    Importe            INTEGER," +
