@@ -58,7 +58,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
     private void darDeBaja() {
         sqldb=MainActivity.toh.getWritableDatabase();
         String id=txtIdVehiculo.getText().toString();
-        sqldb.delete("Vehiculo","IdVehiculo=?",new String[]{id});
+        sqldb.delete("Vehiculos","IdVehiculo=?",new String[]{id});
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
         btnAlta.setEnabled(true);
@@ -91,7 +91,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String dni=txtDNI.getText().toString();
         //Llenar el contentValue con el valor de la caja y su nombre
         String[]elementos=new String[]{idVehiculo,marca,modelo,matricula,year,dni};
-        String[]nombreelementos=new String[]{"idCliente","Marca","Modelo","Matricula","Year","Dni"};
+        String[]nombreelementos=new String[]{"idVehiculo","Marca","Modelo","Matricula","Year","Dni"};
         for (int i = 0; i < elementos.length; i++) {
             cv.put(nombreelementos[i],elementos[i]);
         }
@@ -110,7 +110,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
             txtMarca.setText(c.getString(1));
             txtModelo.setText(c.getString(2));
             txtMatricula.setText(c.getString(3));
-            txtYear.setText(c.getInt(4));
+            txtYear.setText(Integer.toString(c.getInt(4)));
             txtDNI.setText(c.getString(5));
             //Habilitar y deshabilitar los botones correspondientes
             btnAlta.setEnabled(false);
