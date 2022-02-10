@@ -39,7 +39,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "    CodigoNota         INTEGER," +
             "    DNI                TEXT UNIQUE," +
             "    FechaReparacion INTEGER," +
-            "    Concepcto          TEXT," +
+            "    Concepto          TEXT," +
             "    Importe            INTEGER," +
             "    PRIMARY KEY (" +
             "        CodigoNota" +
@@ -77,7 +77,9 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "               );" +
             "END;";
 
-
+    private String strDropTablaClientes="DROP TABLE IF EXISTS Clientes";
+    private String strDropTablaVehiculos="DROP TABLE IF EXISTS Vehiculos";
+    private String strDropTablaFacturas="DROP TABLE IF EXISTS NotasReparaciones";
     public TallerOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -93,6 +95,9 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(strDropTablaClientes);
+        db.execSQL(strDropTablaVehiculos);
+        db.execSQL(strDropTablaFacturas);
+        this.onCreate(db);
     }
 }
