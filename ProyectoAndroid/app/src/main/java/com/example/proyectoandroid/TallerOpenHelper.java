@@ -1,5 +1,6 @@
 package com.example.proyectoandroid;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -84,6 +85,11 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+    private static Cliente[] clientes=new Cliente[]{
+            new Cliente(1,"pedro","jimenez","1G"),
+            new Cliente(2,"xabier","garrote","2G"),
+            new Cliente(3,"jose","ortiz","3G"),};
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(strCrearTablaClientes);
@@ -100,4 +106,14 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
         db.execSQL(strDropTablaFacturas);
         this.onCreate(db);
     }
+
+    private void inicializarValores(SQLiteDatabase db) {
+        ContentValues cv=new ContentValues();
+        for (Cliente cliente : clientes) {
+            cv.put("idCliente",cliente.getIdCliente());
+            cv.put("nombre",cliente.getNombre());
+            cv.put("apellido",cliente.getApellido());
+            cv.put("DNI",cliente.getDni());
+            db.insertOrThrow("Clientes",null,cv);
+        }
 }
