@@ -14,7 +14,7 @@ public class Cliente {
     }
 
     public int getIdCliente() {
-        return IdCliente;
+        return idCliente;
     }
 
     public String getNombre() {
