@@ -14,6 +14,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "    Nombre    TEXT," +
             "    Apellido  TEXT," +
             "    DNI       TEXT    UNIQUE," +
+            "    ImgCliente TEXT," +
             "    PRIMARY KEY (" +
             "        IdCliente" +
             "    )," +
