@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
     Button btnAlta,btnBaja,btnModificacion,btnBuscar;
     EditText txtIdVehiculo, txtMarca, txtModelo, txtMatricula,txtYear,txtDNI;
     SQLiteDatabase sqldb;
+    MediaPlayer mpTokyoDrift;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,9 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         txtMatricula =findViewById(R.id.txtMatricula);
         txtYear=findViewById(R.id.txtYear);
         txtDNI=findViewById(R.id.txtDni);
-        
+        mpTokyoDrift=MediaPlayer.create(this,R.raw.tokyo_drift);
+        mpTokyoDrift.start();
+        mpTokyoDrift.setLooping(true);
         btnAlta=findViewById(R.id.btnAlta);
         btnBaja=findViewById(R.id.btnBaja);
         btnModificacion=findViewById(R.id.btnModificacion);
@@ -51,6 +55,12 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         else if(v==btnModificacion){
             modificar();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        mpTokyoDrift.stop();
+        super.onBackPressed();
     }
 
     private void modificar() {
