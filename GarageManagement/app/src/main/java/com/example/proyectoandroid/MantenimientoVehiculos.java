@@ -3,9 +3,11 @@ package com.example.proyectoandroid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -26,10 +28,14 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         txtMarca =findViewById(R.id.txtMarca);
         txtModelo =findViewById(R.id.txtModelo);
         txtMatricula =findViewById(R.id.txtMatricula);
-        txtYear=findViewById(R.id.txtYear);
         txtDNI=findViewById(R.id.txtDni);
         mpTokyoDrift=MediaPlayer.create(this,R.raw.tokyo_drift);
         mpTokyoDrift.start();
+        AudioManager ad=(AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        int volumen=ad.getStreamMaxVolume(AudioManager.STREAM_MUSIC)/2;
+        while (volumen>ad.getStreamVolume(AudioManager.STREAM_MUSIC)){
+            ad.adjustVolume(AudioManager.ADJUST_RAISE,AudioManager.FLAG_PLAY_SOUND);
+        }
         mpTokyoDrift.setLooping(true);
         btnAlta=findViewById(R.id.btnAlta);
         btnBaja=findViewById(R.id.btnBaja);
@@ -70,10 +76,10 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         llenarCv(cv);
         try {
             sqldb.update("Vehiculos",cv,"IdVehiculo=?",new String[]{id});
-            Toast.makeText(this,"Vehiculo modificado con exito",Toast.LENGTH_LONG).show();
+            mostrarMensaje("Vehiculo modificado con exito");
         }
-        catch (SQLiteConstraintException e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
+        catch (Exception e){
+            mostrarMensaje("Ha habido un error:"+e.getMessage());
         }
     }
 
@@ -98,8 +104,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
             btnModificacion.setEnabled(true);
         }
         catch(Exception e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
-            return;
+            mostrarMensaje("Ha habido un error "+e.getMessage());
         }
     }
 
@@ -109,11 +114,10 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String marca=txtMarca.getText().toString();
         String modelo=txtModelo.getText().toString();
         String matricula=txtMatricula.getText().toString();
-        String year=txtYear.getText().toString();
-        String dni=txtDNI.getText().toString();
+        String IdCliente=txtDNI.getText().toString();
         //Llenar el contentValue con el valor de la caja y su nombre
-        String[]elementos=new String[]{idVehiculo,marca,modelo,matricula,year,dni};
-        String[]nombreelementos=new String[]{"idVehiculo","Marca","Modelo","Matricula","Year","Dni"};
+        String[]elementos=new String[]{idVehiculo,marca,modelo,matricula,dni};
+        String[]nombreelementos=new String[]{"idVehiculo","Marca","Modelo","Matricula","Dni"};
         for (int i = 0; i < elementos.length; i++) {
             cv.put(nombreelementos[i],elementos[i]);
         }
@@ -123,7 +127,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String idVehiculo=txtIdVehiculo.getText().toString();
         sqldb=MainActivity.toh.getReadableDatabase();
         Cursor c=sqldb.query("Vehiculos",new String[]
-                        {"IdVehiculo","Marca","Modelo","Matricula","Year","Dni"},
+                        {"IdVehiculo","Marca","Modelo","Matricula","Dni"},
                 "IdVehiculo=?",
                 new String[]{idVehiculo},
                 null,null,null);
@@ -132,8 +136,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
             txtMarca.setText(c.getString(1));
             txtModelo.setText(c.getString(2));
             txtMatricula.setText(c.getString(3));
-            txtYear.setText(Integer.toString(c.getInt(4)));
-            txtDNI.setText(c.getString(5));
+            txtDNI.setText(c.getString(4));
             //Habilitar y deshabilitar los botones correspondientes
             btnAlta.setEnabled(false);
             btnBaja.setEnabled(true);

@@ -9,11 +9,12 @@ import androidx.annotation.Nullable;
 
 public class TallerOpenHelper extends SQLiteOpenHelper {
 
+    /*Sentencias de creacion de tablas*/
     private String strCrearTablaClientes = "CREATE TABLE Clientes (" +
-            "    IdCliente INTEGER," +
-            "    Nombre    TEXT," +
-            "    Apellido  TEXT," +
-            "    DNI       TEXT    UNIQUE," +
+            "    IdCliente  INTEGER CHECK (IdCliente > 0)," +
+            "    Nombre     TEXT," +
+            "    Apellido   TEXT," +
+            "    DNI        TEXT    UNIQUE," +
             "    ImgCliente TEXT," +
             "    PRIMARY KEY (" +
             "        IdCliente" +
@@ -22,95 +23,92 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             "        DNI" +
             "    )" +
             ");";
+    private String strCrearTablaFacturas = "CREATE TABLE Facturas (" +
+            "    IdFactura       INTEGER CHECK (IdFactura > 0)," +
+            "    IdCliente       INTEGER," +
+            "    FechaReparacion TEXT," +
+            "    Concepto        TEXT," +
+            "    Importe         INTEGER," +
+            "    PRIMARY KEY (" +
+            "        IdFactura" +
+            "    )," +
+            "    FOREIGN KEY (" +
+            "        IdCliente" +
+            "    )" +
+            "    REFERENCES Clientes (IdCliente) " +
+            ");";
     private String strCrearTablaVehiculos = "CREATE TABLE Vehiculos (" +
-            "    IdVehiculo INTEGER," +
+            "    IdVehiculo INTEGER CHECK (IdVehiculo > 0)," +
+            "    IdCliente  INTEGER," +
             "    Marca      TEXT," +
             "    Modelo     TEXT," +
             "    Matricula  TEXT," +
-            "    Year        INTEGER," +
-            "    Dni        TEXT UNIQUE," +
             "    FOREIGN KEY (" +
-            "        Dni" +
+            "        IdCliente" +
             "    )" +
-            "    REFERENCES Clientes (DNI)," +
+            "    REFERENCES Clientes (IdCliente)," +
             "    PRIMARY KEY (" +
             "        IdVehiculo" +
             "    )" +
             ");";
-    private String strCrearTablaReparaciones = "CREATE TABLE NotasReparaciones (" +
-            "    CodigoNota         INTEGER," +
-            "    DNI                TEXT UNIQUE," +
-            "    FechaReparacion INTEGER," +
-            "    Concepto          TEXT," +
-            "    Importe            INTEGER," +
-            "    PRIMARY KEY (" +
-            "        CodigoNota" +
-            "    )," +
-            "    FOREIGN KEY (" +
-            "        DNI" +
-            "    )" +
-            "    REFERENCES Clientes (DNI) " +
-            ");";
 
-    private String strTriInsFKDNiNotasReparaciones = "CREATE TRIGGER insertFKdniNotasReparaciones" +
+    /*Sentencias de creacion de triggers*/
+    private String strTriInsFKIdClienteFacturas ="CREATE TRIGGER insertFKIdClienteFacturas" +
             "        BEFORE INSERT" +
-            "            ON NotasReparaciones" +
+            "            ON Facturas" +
             "      FOR EACH ROW " +
             "BEGIN" +
-            "    SELECT RAISE(ABORT, \"No existe registro seleccionado\")" +
-            "     WHERE new.DNI IS NULL OR " +
+            "    SELECT RAISE(ABORT, \"No existe registro seleccionado en la tabla clientes\") " +
+            "     WHERE new.IdCliente IS NULL OR " +
             "           NOT EXISTS (" +
-            "                   SELECT DNI" +
+            "                   SELECT IdCliente" +
             "                     FROM Clientes" +
-            "                    WHERE DNI = new.DNI" +
+            "                    WHERE IdCliente = new.IdCliente" +
             "               );" +
-            "END;";
-
-    private String strTriUpdFKDNINotasReparaciones="CREATE TRIGGER updateFKdniNotasReparaciones" +
+            "END;" ;
+    private String strTriUpdFKIdClienteFacturas ="CREATE TRIGGER updateFKIdClienteFacturas" +
             "        BEFORE UPDATE" +
-            "            ON NotasReparaciones" +
+            "            ON Facturas" +
             "      FOR EACH ROW " +
             "BEGIN" +
-            "    SELECT RAISE(ABORT, \"No existe registro seleccionado\") " +
-            "     WHERE new.DNI IS NULL OR " +
+            "    SELECT RAISE(ABORT, \"No existe registro seleccionado en la tabla clientes\") " +
+            "     WHERE new.IdCliente IS NULL OR " +
             "           NOT EXISTS (" +
-            "                   SELECT DNI" +
+            "                   SELECT IdCliente" +
             "                     FROM Clientes" +
-            "                    WHERE DNI = new.DNI" +
+            "                    WHERE IdCliente = new.IdCliente" +
             "               );" +
             "END;";
-
-    private String strTriInsFKDNIVehiculos = "CREATE TRIGGER insertFKdniVehiculos" +
+    private String strTriInsFKIdClienteVehiculos = "CREATE TRIGGER insertFKIdClienteVehiculos" +
             "        BEFORE INSERT" +
             "            ON Vehiculos" +
             "      FOR EACH ROW " +
             "BEGIN" +
-            "    SELECT RAISE(ABORT, \"No existe registro seleccionado\")" +
-            "     WHERE new.DNI IS NULL OR " +
+            "    SELECT RAISE(ABORT, \"No existe registro seleccionado en la tabla clientes\") " +
+            "     WHERE new.IdCliente IS NULL OR " +
             "           NOT EXISTS (" +
-            "                   SELECT DNI" +
+            "                   SELECT IdCliente" +
             "                     FROM Clientes" +
-            "                    WHERE DNI = new.DNI" +
+            "                    WHERE IdCliente = new.IdCliente" +
             "               );" +
             "END;";
-
-    private String strTriUpdFKDNIVehiculos="CREATE TRIGGER updateFKdniVehiculos" +
+    private String strTriUpdFKIdClienteVehiculos ="CREATE TRIGGER updateFKIdClienteVehiculos" +
             "        BEFORE UPDATE" +
             "            ON Vehiculos" +
             "      FOR EACH ROW " +
             "BEGIN" +
             "    SELECT RAISE(ABORT, \"No existe registro seleccionado\") " +
-            "     WHERE new.DNI IS NULL OR " +
+            "     WHERE new.IdCliente IS NULL OR " +
             "           NOT EXISTS (" +
-            "                   SELECT DNI" +
+            "                   SELECT IdCliente" +
             "                     FROM Clientes" +
-            "                    WHERE DNI = new.DNI" +
+            "                    WHERE IdCliente = new.IdCliente" +
             "               );" +
             "END;";
-
+    /*Sentencias de eliminacion de triggers*/
     private String strDropTablaClientes = "DROP TABLE IF EXISTS Clientes";
     private String strDropTablaVehiculos = "DROP TABLE IF EXISTS Vehiculos";
-    private String strDropTablaFacturas = "DROP TABLE IF EXISTS NotasReparaciones";
+    private String strDropTablaFacturas = "DROP TABLE IF EXISTS Facturas";
 
     public TallerOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -121,9 +119,9 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
             new Cliente(2, "xabier", "garrote", "2G"),
             new Cliente(3, "jose", "ortiz", "3G"),};
 
-    private String[] sentencias={strCrearTablaClientes,strCrearTablaReparaciones,strCrearTablaVehiculos,
-            strTriInsFKDNIVehiculos,strTriInsFKDNiNotasReparaciones,
-            strTriUpdFKDNIVehiculos,strTriUpdFKDNINotasReparaciones};
+    private String[] sentencias={strCrearTablaClientes, strCrearTablaFacturas,strCrearTablaVehiculos,
+            strTriInsFKIdClienteVehiculos,strTriInsFKIdClienteFacturas,
+            strTriUpdFKIdClienteVehiculos, strTriUpdFKIdClienteFacturas};
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (String sentencia : sentencias) {
