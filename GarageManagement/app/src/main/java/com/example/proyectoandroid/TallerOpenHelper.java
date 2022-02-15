@@ -117,7 +117,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
     private Cliente[] clientes = new Cliente[]{
             new Cliente(1, "pedro", "jimenez", "1G"),
             new Cliente(2, "xabier", "garrote", "2G"),
-            new Cliente(3, "jose", "ortiz", "3G"),};
+            new Cliente(5, "jose", "ortiz", "3G"),};
 
     private String[] sentencias={strCrearTablaClientes, strCrearTablaFacturas,strCrearTablaVehiculos,
             strTriInsFKIdClienteVehiculos,strTriInsFKIdClienteFacturas,

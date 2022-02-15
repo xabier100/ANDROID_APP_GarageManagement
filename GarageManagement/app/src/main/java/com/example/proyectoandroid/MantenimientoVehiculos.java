@@ -5,21 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MantenimientoVehiculos extends AppCompatActivity implements View.OnClickListener {
+public class MantenimientoVehiculos extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     Button btnAlta,btnBaja,btnModificacion,btnBuscar;
-    EditText txtIdVehiculo, txtMarca, txtModelo, txtMatricula,txtYear,txtDNI;
+    EditText txtIdVehiculo, txtMarca, txtModelo, txtMatricula;
     SQLiteDatabase sqldb;
+    Spinner spClientes;
     MediaPlayer mpTokyoDrift;
+    String idCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +33,9 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         txtMarca =findViewById(R.id.txtMarca);
         txtModelo =findViewById(R.id.txtModelo);
         txtMatricula =findViewById(R.id.txtMatricula);
-        txtDNI=findViewById(R.id.txtDni);
+        spClientes=findViewById(R.id.spClientes);
+        cargarSpinner(spClientes);
+        spClientes.setOnItemSelectedListener(this);
         mpTokyoDrift=MediaPlayer.create(this,R.raw.tokyo_drift);
         mpTokyoDrift.start();
         AudioManager ad=(AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
@@ -45,6 +52,15 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         btnBaja.setOnClickListener(this);
         btnModificacion.setOnClickListener(this);
         btnBuscar.setOnClickListener(this);
+    }
+
+    private void cargarSpinner(Spinner spClientes) {
+        sqldb=MainActivity.toh.getReadableDatabase();
+        Cursor c=sqldb.query("Clientes",new String[]{"Nombre as _id","Apellido","DNI"},null,null,null,null,"IdCliente");
+        String[] columnas=new String[]{"_id","Apellido","DNI"};
+        int []textViews=new int[]{R.id.txtNombre,R.id.txtApellido,R.id.txtDni};
+        SimpleCursorAdapter sca=new SimpleCursorAdapter(this,R.layout.fila_spcategorias,c,columnas,textViews, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        spClientes.setAdapter(sca);
     }
 
     @Override
@@ -114,10 +130,10 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String marca=txtMarca.getText().toString();
         String modelo=txtModelo.getText().toString();
         String matricula=txtMatricula.getText().toString();
-        String IdCliente=txtDNI.getText().toString();
+        String IdCliente=idCliente;
         //Llenar el contentValue con el valor de la caja y su nombre
-        String[]elementos=new String[]{idVehiculo,marca,modelo,matricula,dni};
-        String[]nombreelementos=new String[]{"idVehiculo","Marca","Modelo","Matricula","Dni"};
+        String[]elementos=new String[]{idVehiculo,marca,modelo,matricula,IdCliente};
+        String[]nombreelementos=new String[]{"idVehiculo","Marca","Modelo","Matricula","IdCliente"};
         for (int i = 0; i < elementos.length; i++) {
             cv.put(nombreelementos[i],elementos[i]);
         }
@@ -127,7 +143,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String idVehiculo=txtIdVehiculo.getText().toString();
         sqldb=MainActivity.toh.getReadableDatabase();
         Cursor c=sqldb.query("Vehiculos",new String[]
-                        {"IdVehiculo","Marca","Modelo","Matricula","Dni"},
+                        {"IdVehiculo","Marca","Modelo","Matricula","IdCliente"},
                 "IdVehiculo=?",
                 new String[]{idVehiculo},
                 null,null,null);
@@ -136,7 +152,15 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
             txtMarca.setText(c.getString(1));
             txtModelo.setText(c.getString(2));
             txtMatricula.setText(c.getString(3));
-            txtDNI.setText(c.getString(4));
+            int pos=-1;
+            try {
+                pos=buscarEnQuePosicionDelCursorEsta(c.getInt(4));
+            }
+            catch (Exception e){
+                mostrarMensaje(e.getMessage());
+            }
+            mostrarMensaje(String.valueOf(pos));
+            spClientes.setSelection(pos);
             //Habilitar y deshabilitar los botones correspondientes
             btnAlta.setEnabled(false);
             btnBaja.setEnabled(true);
@@ -151,7 +175,37 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         }
     }
 
+    private int buscarEnQuePosicionDelCursorEsta(int idCliente) throws Exception {
+        sqldb=MainActivity.toh.getReadableDatabase();
+        Cursor c=sqldb.query("Clientes",new String[]{"idCliente as _id",},null,null,null,null,"IdCliente");
+        c.moveToFirst();
+        int i=0;
+        while (c.isAfterLast()==false){
+            if (c.getInt(0)==idCliente){
+                return i;
+            }
+            c.moveToNext();
+            i++;
+        }
+        throw new Exception("Se ha pasado de los limites al buscar");
+
+    }
+
     private void mostrarMensaje(String s) {
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        sqldb=MainActivity.toh.getReadableDatabase();
+        Cursor c=sqldb.rawQuery("SELECT IdCliente FROM Clientes ORDER BY IdCliente",null);
+        c.moveToPosition(position);
+        idCliente=c.getString(0);
+        Toast.makeText(this,idCliente,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
