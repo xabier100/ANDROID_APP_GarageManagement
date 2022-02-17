@@ -199,7 +199,8 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         sqldb=MainActivity.toh.getReadableDatabase();
         Cursor c=sqldb.rawQuery("SELECT IdCliente FROM Clientes ORDER BY IdCliente",null);
         c.moveToPosition(position);
-        idCliente=c.getString(0);
+        idCliente=String.valueOf(c.getInt(0));
+        mostrarMensaje(idCliente);
     }
 
     @Override

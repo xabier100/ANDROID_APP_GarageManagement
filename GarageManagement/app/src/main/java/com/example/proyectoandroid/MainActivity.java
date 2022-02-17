@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toh=new TallerOpenHelper(this, NOMBRE_BD,null,6);
+        toh=new TallerOpenHelper(this, NOMBRE_BD,null,8);
         //Asignar a cada boton su vista
         btnMantenimientoClientes=findViewById(R.id.btnMantenimientoClientes);
         btnMantenimientoFacturas=findViewById(R.id.btnMantenimientoFacturas);

@@ -161,9 +161,16 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
     }
 
     private Bitmap obtenerBmpDeString(String string) {
-        byte [] array=Base64.decode(string,Base64.DEFAULT);
-        Bitmap bmp= BitmapFactory.decodeByteArray(array,0,array.length);
-        return bmp;
+        if (string==null){
+            Bitmap bmp=null;
+            return bmp;
+        }
+        else{
+            byte [] array=Base64.decode(string,Base64.DEFAULT);
+            Bitmap bmp= BitmapFactory.decodeByteArray(array,0,array.length);
+            return bmp;
+        }
+
     }
 
 

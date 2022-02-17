@@ -109,7 +109,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
     private String strDropTablaClientes = "DROP TABLE IF EXISTS Clientes";
     private String strDropTablaVehiculos = "DROP TABLE IF EXISTS Vehiculos";
     private String strDropTablaFacturas = "DROP TABLE IF EXISTS Facturas";
-
+    private String strDropTablaNotasReparaciones="DROP TABLE IF EXISTS NotasReparaciones";
     public TallerOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -135,6 +135,7 @@ public class TallerOpenHelper extends SQLiteOpenHelper {
         db.execSQL(strDropTablaClientes);
         db.execSQL(strDropTablaVehiculos);
         db.execSQL(strDropTablaFacturas);
+        db.execSQL(strDropTablaNotasReparaciones);
         this.onCreate(db);
     }
 
