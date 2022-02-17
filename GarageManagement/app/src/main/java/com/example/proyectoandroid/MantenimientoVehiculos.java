@@ -59,7 +59,7 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         Cursor c=sqldb.query("Clientes",new String[]{"Nombre as _id","Apellido","DNI"},null,null,null,null,"IdCliente");
         String[] columnas=new String[]{"_id","Apellido","DNI"};
         int []textViews=new int[]{R.id.txtNombre,R.id.txtApellido,R.id.txtDni};
-        SimpleCursorAdapter sca=new SimpleCursorAdapter(this,R.layout.fila_spcategorias,c,columnas,textViews, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        SimpleCursorAdapter sca=new SimpleCursorAdapter(this,R.layout.fila_sp_clientes,c,columnas,textViews, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         spClientes.setAdapter(sca);
     }
 
@@ -159,7 +159,6 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
             catch (Exception e){
                 mostrarMensaje(e.getMessage());
             }
-            mostrarMensaje(String.valueOf(pos));
             spClientes.setSelection(pos);
             //Habilitar y deshabilitar los botones correspondientes
             btnAlta.setEnabled(false);
@@ -201,7 +200,6 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         Cursor c=sqldb.rawQuery("SELECT IdCliente FROM Clientes ORDER BY IdCliente",null);
         c.moveToPosition(position);
         idCliente=c.getString(0);
-        Toast.makeText(this,idCliente,Toast.LENGTH_LONG).show();
     }
 
     @Override
