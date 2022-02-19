@@ -107,7 +107,7 @@ public class MantenimientoFacturas extends AppCompatActivity implements View.OnC
     private void darDeBaja() {
         sqldb=MainActivity.toh.getWritableDatabase();
         String id= txtIdFactura.getText().toString();
-        sqldb.delete("NotasReparaciones","CodigoNota=?",new String[]{id});
+        sqldb.delete("Facturas","IdFactura=?",new String[]{id});
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
         btnAlta.setEnabled(true);
@@ -206,7 +206,6 @@ public class MantenimientoFacturas extends AppCompatActivity implements View.OnC
         Cursor c=sqldb.rawQuery("SELECT IdCliente FROM Clientes ORDER BY IdCliente",null);
         c.moveToPosition(position);
         idCliente=String.valueOf(c.getInt(0));
-        mostrarMensaje(idCliente);
     }
 
     @Override

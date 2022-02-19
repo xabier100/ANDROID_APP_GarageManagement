@@ -9,11 +9,12 @@
 
     <Spinner
         android:id="@+id/spClientes"
-        android:layout_width="311dp"
-        android:layout_height="22dp"
+        android:layout_width="294dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.239" />
@@ -35,19 +36,19 @@
 
     <EditText
         android:id="@+id/txtIdFactura"
-        android:layout_width="77dp"
-        android:layout_height="34dp"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/btnBuscar"
@@ -110,18 +111,18 @@
     <EditText
         android:id="@+id/txtImporte"
         android:layout_width="67dp"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:ems="10"
         android:inputType="number"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.651" />
 
     <TextView
         android:id="@+id/textView8"
@@ -206,4 +207,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.89" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="37dp"
+        android:layout_height="28dp"
+        android:background="@color/white"
+        android:text="€"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.652" />
 </androidx.constraintlayout.widget.ConstraintLayout>

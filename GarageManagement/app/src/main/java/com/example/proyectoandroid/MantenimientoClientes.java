@@ -181,11 +181,16 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
 
     public String convertirABase64(ImageView img){
         Bitmap bmp=((BitmapDrawable)img.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
-        byte []array=baos.toByteArray();
-        String strfoto= Base64.encodeToString(array,Base64.DEFAULT);
-        return strfoto;
+        if (bmp==null){
+            return "";
+        }
+        else{
+            ByteArrayOutputStream baos=new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
+            byte []array=baos.toByteArray();
+            String strfoto= Base64.encodeToString(array,Base64.DEFAULT);
+            return strfoto;
+        }
     }
 
 
