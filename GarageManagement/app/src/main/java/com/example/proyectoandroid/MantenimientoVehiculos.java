@@ -90,19 +90,24 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         String id=txtIdVehiculo.getText().toString();
         ContentValues cv=new ContentValues();
         llenarCv(cv);
-        try {
-            sqldb.update("Vehiculos",cv,"IdVehiculo=?",new String[]{id});
-            mostrarMensaje("Vehiculo modificado con exito");
+        int numColumAfec=sqldb.update("Vehiculos",cv,"IdVehiculo=?",new String[]{id});
+        if (numColumAfec==0){
+            mostrarMensaje("No se ha modificado ningun registro");
+            return;
         }
-        catch (Exception e){
-            mostrarMensaje("Ha habido un error:"+e.getMessage());
-        }
+        mostrarMensaje("Vehiculo modificado con exito");
+
+
     }
 
     private void darDeBaja() {
         sqldb=MainActivity.toh.getWritableDatabase();
         String id=txtIdVehiculo.getText().toString();
-        sqldb.delete("Vehiculos","IdVehiculo=?",new String[]{id});
+        int numColumElim=sqldb.delete("Vehiculos","IdVehiculo=?",new String[]{id});
+        if (numColumElim==0){
+            mostrarMensaje("No se ha eliminado ningun registro");
+            return;
+        }
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
         btnAlta.setEnabled(true);
@@ -200,7 +205,6 @@ public class MantenimientoVehiculos extends AppCompatActivity implements View.On
         Cursor c=sqldb.rawQuery("SELECT IdCliente FROM Clientes ORDER BY IdCliente",null);
         c.moveToPosition(position);
         idCliente=String.valueOf(c.getInt(0));
-        mostrarMensaje(idCliente);
     }
 
     @Override

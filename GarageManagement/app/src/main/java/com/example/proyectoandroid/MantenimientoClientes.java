@@ -79,19 +79,28 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
         String id=txtIdCliente.getText().toString();
         ContentValues cv=new ContentValues();
         llenarCv(cv);
-        try {
-            sqldb.update("Clientes",cv,"IdCliente=?",new String[]{id});
-            Toast.makeText(this,"Cliente modificado con exito",Toast.LENGTH_LONG).show();
+        try{
+            int numColumAfec=sqldb.update("Clientes", cv, "IdCliente=?", new String[]{id});
+            if (numColumAfec==0){
+                mostrarMensaje("No se ha modificado ningun registro");
+                return;
+            }
+            mostrarMensaje("Cliente modificado con exito");
         }
         catch (SQLiteConstraintException e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
+            mostrarMensaje("Dni ya existente en otro registro");
         }
+
     }
 
     private void darDeBaja() {
         sqldb=MainActivity.toh.getWritableDatabase();
         String id=txtIdCliente.getText().toString();
-        sqldb.delete("Clientes","IdCliente=?",new String[]{id});
+        int numColumElim=sqldb.delete("Clientes","IdCliente=?",new String[]{id});
+        if (numColumElim==0){
+            mostrarMensaje("No se ha eliminado ningun registro");
+            return;
+        }
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
         btnAlta.setEnabled(true);
@@ -109,7 +118,7 @@ public class MantenimientoClientes extends AppCompatActivity implements View.OnC
             btnModificacion.setEnabled(true);
         }
         catch(Exception e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Ha habido un error: "+e.getMessage(),Toast.LENGTH_LONG).show();
             return;
         }
 

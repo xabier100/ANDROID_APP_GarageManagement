@@ -99,15 +99,19 @@ public class MantenimientoFacturas extends AppCompatActivity implements View.OnC
             sqldb.update("Facturas",cv,"IdFactura=?",new String[]{id});
             mostrarMensaje("Factura modificada con exito");
         }
-        catch (SQLiteConstraintException e){
-            mostrarMensaje("Ha habido un error con el DNI");
+        catch (Exception e){
+            mostrarMensaje("Ha habido un error "+e.getMessage());
         }
     }
 
     private void darDeBaja() {
         sqldb=MainActivity.toh.getWritableDatabase();
         String id= txtIdFactura.getText().toString();
-        sqldb.delete("Facturas","IdFactura=?",new String[]{id});
+        int numColumElim=sqldb.delete("Facturas","IdFactura=?",new String[]{id});
+        if (numColumElim==0){
+            mostrarMensaje("No se ha eliminado ningun registro");
+            return;
+        }
         btnBaja.setEnabled(false);
         btnModificacion.setEnabled(false);
         btnAlta.setEnabled(true);
@@ -125,7 +129,7 @@ public class MantenimientoFacturas extends AppCompatActivity implements View.OnC
             btnModificacion.setEnabled(true);
         }
         catch(Exception e){
-            Toast.makeText(this,"Ha habido un error con el DNI",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Ha habido un error "+e.getMessage(),Toast.LENGTH_LONG).show();
             return;
         }
     }
